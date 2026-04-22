@@ -1,92 +1,195 @@
-# NSGA2-FJSP
+# NSGA-II-FJSP
 
-基于 NSGA-II 的多目标柔性车间调度（FJSP）示例代码，面向学习与研究。  
-优化目标：最小化完工时间（Makespan）与总能耗（TEC）。
+An implementation of NSGA-II for the Flexible Job Shop Scheduling Problem (FJSP) with two objectives:
 
-## 特性
-- NSGA-II 选择机制（快速非支配排序 + 拥挤度距离）
-- OS/MS 双层编码与对应的交叉、变异算子
-- 支持按迭代次数或 CPU 时间限制停止
-- 解码与甘特图绘制，输出最终 Pareto 前沿
-- 批量实验脚本与结果可视化
+- Minimize makespan
+- Minimize energy consumption
 
-## 环境与依赖
-- Python 3.8+（建议 3.10/3.11）
-- 依赖：`numpy`、`matplotlib`、`pandas`  
-- 批量实验额外依赖：`tqdm`
+The current codebase has been refactored into a cleaner layout with separate algorithm, dataset, and utility modules.
 
-安装示例：
-```bash
-pip install numpy matplotlib pandas tqdm
+## Features
+
+- NSGA-II for bi-objective optimization
+- OS/MS chromosome representation
+- Fast non-dominated sorting and crowding-distance based environmental selection
+- Binary tournament parent selection
+- Support for `.txt` and `.fjs` FJSP instances
+- Single-run execution and repeated experiment testing
+- Pareto front export to CSV and visualization to PNG
+
+## Project Structure
+
+```text
+.
+├── main.py
+├── datasets/
+│   └── FJSP/
+│       └── Brandimarte_Data/
+├── nsga_fjsp/
+│   ├── NSGA_II.py
+│   ├── binary_tournament_selection.py
+│   ├── decoder.py
+│   ├── environment_selection.py
+│   ├── operators.py
+│   ├── parser.py
+│   └── problem.py
+├── utils/
+│   ├── performance_test.py
+│   └── recorder.py
+└── results/
 ```
 
-## 快速开始
+## Requirements
+
+- Python 3.8+
+- Required: `numpy`
+- Optional: `matplotlib`, `tqdm`
+
+Install dependencies:
+
+```bash
+pip install numpy matplotlib tqdm
+```
+
+Notes:
+
+- `main.py` only requires `numpy`
+- `utils/performance_test.py` needs `matplotlib` to generate figures
+- If `tqdm` is not installed, repeated experiments still run without a progress bar
+
+## Quick Start
+
+### Run a single experiment
+
 ```bash
 python main.py
 ```
 
-默认读取 `data/Brandimarte_Data/Mk01.txt`，运行结束后会：
-- 控制台输出最终 Pareto 前沿与最优编码
-- 在 `results/` 下保存甘特图（`gantt_chart.png` / `gantt_chart.pdf`）
+Current default settings in `main.py`:
 
-## 结果示例（甘特图）
-> 提示：请先运行 `python main.py` 生成 `results/gantt_chart.png`。
+- Dataset: `Brandimarte_Data`
+- Instance: `Mk01`
+- Stopping criterion: `max_fe = 10000`
+- Population size: `50`
+- Crossover rate: `0.8`
+- Mutation rate: `0.15`
 
-![Gantt Chart](results/gantt_chart.png)
+The program prints the final Pareto front to the console.
 
-## 结果示例（Pareto 前沿）
-> 提示：请先运行 `python "src/utils/performance _test.py"` 生成 `results/Brandimarte_Data/Mk01/pareto_fronts.png`。
+### Run repeated performance tests
+
+```bash
+python utils/performance_test.py
+```
+
+Current default settings in `utils/performance_test.py`:
+
+- Stopping criterion: `max_fe = 50000`
+- Population size: `100`
+- Crossover rate: `0.9`
+- Mutation rate: `0.15`
+- Number of runs: `10`
+- Default test instance: `Brandimarte_Data/Mk01`
+
+## Output Files
+
+Repeated experiment results are saved under:
+
+```text
+results/<dataset_name>/<instance_name>/
+```
+
+For example:
+
+```text
+results/Brandimarte_Data/Mk01/
+```
+
+The current experiment pipeline produces:
+
+- `all_pareto_points.csv`: all Pareto points from all runs
+- `final_pareto_front.csv`: merged global non-dominated front
+- `pareto_fronts.png`: Pareto fronts from repeated runs
+- `combined_pareto_front.png`: merged Pareto front visualization
+- `history/pareto_history_run_XX.csv`: Pareto history recorded during each run
+
+## Example Result
+
+Pareto fronts generated from repeated runs on `Brandimarte_Data/Mk01`:
 
 ![Pareto Fronts](results/Brandimarte_Data/Mk01/pareto_fronts.png)
 
-## 批量实验（可选）
-```bash
-python "src/utils/performance _test.py"
-```
-说明：
-- 该脚本会对多个数据集重复运行并统计结果
-- 输出位于 `results/<数据源>/<数据集>/` 下，包括：
-  - `all_pareto_points.csv`
-  - `final_pareto_front.csv`
-  - `pareto_fronts.png`
-  - `combined_pareto_front.png`
+## Dataset Format
 
-## 参数配置
-主要参数集中在 `main.py`：
-- `da_`：数据源文件夹名，如 `Brandimarte_Data`
-- `a`：具体实例名，如 `Mk01`
-- `generation, popsize, cr, mu`：迭代次数、种群规模、交叉/变异概率
-- `use_cpu_time_limit`：是否启用 CPU 时间限制  
-  时间限制计算：`time_limit = cpu_time * N / 1000`（N 为总工序数）
+The parser currently looks for instance files in:
 
-能耗参数在 `src/algorithms/decode.py` 中设置：
-- `processing_power`：加工功率（kW）
-- `idle_power`：空闲功率（kW）
-
-## 数据格式
-支持两种数据格式：
-- `*.txt`（默认优先读取）
-- `*.fjs`
-
-数据放在 `data/<数据源>/` 下，例如：
-```
-data/Brandimarte_Data/Mk01.txt
+```text
+datasets/FJSP/<dataset_name>/
 ```
 
-## 目录结构
-```
-.
-├─ main.py
-├─ data/
-├─ results/
-└─ src/
-   ├─ algorithms/
-   │  ├─ GA.py
-   │  ├─ decode.py
-   │  ├─ crossover.py
-   │  ├─ mutation.py
-   │  └─ ...
-   └─ utils/
-      ├─ data.py
-      └─ performance _test.py
-```
+Supported formats:
+
+- `.txt`
+- `.fjs`
+
+Resolution order:
+
+1. `datasets/FJSP/<dataset_name>/<instance_name>.txt`
+2. `datasets/FJSP/<dataset_name>/<instance_name>.fjs`
+
+The repository currently includes:
+
+- `datasets/FJSP/Brandimarte_Data/Mk01.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk02.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk03.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk04.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk05.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk06.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk07.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk08.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk09.txt`
+- `datasets/FJSP/Brandimarte_Data/Mk10.txt`
+
+## Main Modules
+
+- `main.py`: entry point for a single run
+- `nsga_fjsp/problem.py`: problem definition, evaluation, initialization, crossover, mutation
+- `nsga_fjsp/NSGA_II.py`: NSGA-II main loop
+- `nsga_fjsp/environment_selection.py`: non-dominated sorting and crowding-distance based environmental selection
+- `nsga_fjsp/binary_tournament_selection.py`: binary tournament parent selection
+- `nsga_fjsp/operators.py`: initialization, crossover, and mutation operators
+- `nsga_fjsp/decoder.py`: decoding and objective calculation
+- `nsga_fjsp/parser.py`: instance file loading
+- `utils/performance_test.py`: repeated experiments, CSV export, plotting, history recording
+- `utils/recorder.py`: final Pareto front extraction and printing
+
+## Parameter Configuration
+
+To change the experiment settings:
+
+- Edit `main.py` for single-run parameters
+- Edit `utils/performance_test.py` for repeated test parameters
+- Edit `nsga_fjsp/decoder.py` for the energy model
+
+Current energy model constants:
+
+- `processing_power = 30.0`
+- `idle_power = 1.0`
+
+## Current Default Example
+
+With the current `main.py`, the default run uses:
+
+- Dataset: `Brandimarte_Data`
+- Instance: `Mk01`
+- `max_fe = 10000`
+- `pop_size = 50`
+- `cr = 0.8`
+- `mu = 0.15`
+
+## Future Improvements
+
+- Add command-line arguments for dataset and parameter selection
+- Add benchmark automation for multiple instances
+- Add more evaluation metrics and experiment summaries
+- Add reproducibility support for logging and seed control
