@@ -14,6 +14,14 @@ class Individual:
         self.rank = None
         self.crowding_distance = 0.0
 
+    @property
+    def job_code(self):
+        return self.genes[0]
+
+    @property
+    def machine_code(self):
+        return self.genes[1]
+
 
 class BaseAlgorithm:
     def __init__(self, problem):
