@@ -149,13 +149,6 @@ The repository currently includes the `Brandimarte_Data` benchmark set, for exam
 - `datasets/FJSP/Brandimarte_Data/Mk01.txt`
 - `datasets/FJSP/Brandimarte_Data/Mk02.txt`
 - `datasets/FJSP/Brandimarte_Data/Mk03.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk04.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk05.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk06.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk07.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk08.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk09.txt`
-- `datasets/FJSP/Brandimarte_Data/Mk10.txt`
 
 ## Objective Definition
 
