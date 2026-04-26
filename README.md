@@ -22,6 +22,21 @@ This repository is intended as a lightweight research baseline. It includes the 
 - Gantt-chart generation after optimization:
   machine processing schedule for the best-`Makespan` Pareto solution
 
+## Example Results
+
+Example result folder: `results/Brandimarte_Data/Mk01/`
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <div style="text-align: center;">
+    <p><strong>Pareto Plot</strong></p>
+    <img src="results/Brandimarte_Data/Mk01/pareto_fronts.png" width="400" />
+  </div>
+  <div style="text-align: center;">
+    <p><strong>Gantt Chart</strong></p>
+    <img src="results/Brandimarte_Data/Mk01/best_makespan_gantt.png" width="400" />
+  </div>
+</div>
+
 ## Repository Structure
 
 ```text
@@ -178,20 +193,6 @@ Current default energy-model constants in `nsga_fjsp/decoder.py`:
 - `nsga_fjsp/parser.py`: instance loading
 - `utils/recorder.py`: Pareto-front reporting and Gantt-chart plotting
 - `utils/performance_test.py`: repeated experiments, statistics, CSV export, and Pareto plotting
-
-## Example Results
-
-Example result folder:
-
-- `results/Brandimarte_Data/Mk01/`
-
-Example Pareto plot:
-
-![Combined Pareto Front](results/Brandimarte_Data/Mk01/combined_pareto_front.png)
-
-Example Gantt chart:
-
-![Best Makespan Gantt Chart](results/Brandimarte_Data/Mk01/best_makespan_gantt.png)
 
 ## Customization
 
