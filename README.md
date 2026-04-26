@@ -26,16 +26,16 @@ This repository is intended as a lightweight research baseline. It includes the 
 
 Example result folder: `results/Brandimarte_Data/Mk01/`
 
-<div style="display: flex; justify-content: center; gap: 20px;">
-  <div style="text-align: center;">
-    <p><strong>Pareto Plot</strong></p>
-    <img src="results/Brandimarte_Data/Mk01/pareto_fronts.png" width="400" />
-  </div>
-  <div style="text-align: center;">
-    <p><strong>Gantt Chart</strong></p>
-    <img src="results/Brandimarte_Data/Mk01/best_makespan_gantt.png" width="400" />
-  </div>
-</div>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center"><img src="results/Brandimarte_Data/Mk01/pareto_fronts.png" width="400" /></td>
+    <td align="center"><img src="results/Brandimarte_Data/Mk01/best_makespan_gantt.png" width="400" /></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Pareto Plot</strong></td>
+    <td align="center"><strong>Gantt Chart</strong></td>
+  </tr>
+</table>
 
 ## Repository Structure
 
