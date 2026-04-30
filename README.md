@@ -12,7 +12,7 @@ A Python implementation of NSGA-II for the Flexible Job Shop Scheduling Problem 
 - `Makespan`
 - `Total energy consumption`
 
-This repository is intended as a lightweight research baseline. It includes the core evolutionary solver, benchmark instance parsers, schedule decoding, Pareto-front export, Pareto plotting, and Gantt-chart generation for the best-`Makespan` Pareto solution.
+This repository is intended as a lightweight research baseline. It includes the core evolutionary solver, benchmark instance parsers, schedule decoding, Pareto-front export, Pareto plotting, and Gantt-chart generation for the best-`Makespan` Pareto solution.  
 
 ## Highlights
 
