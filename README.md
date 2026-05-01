@@ -7,7 +7,7 @@
   <img alt="Objectives" src="https://img.shields.io/badge/Objectives-Makespan%20%7C%20Energy-B45309">
 </p>
 
-A Python implementation of NSGA-II for the Flexible Job Shop Scheduling Problem (FJSP), with two optimization objectives:
+A Python implementation of NSGA-II for the Flexible Job Shop Scheduling Problem (FJSP), with two optimization objectives: 
 
 - `Makespan`
 - `Total energy consumption`
